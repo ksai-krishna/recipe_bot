@@ -8,6 +8,7 @@ class RecipeNode:
         self.name = name
         self.ingredients = []
 
+
 class RecipeGraph:
     def __init__(self):
         self.ingredients = {}  # Ingredient name to IngredientNode mapping

@@ -1,55 +1,35 @@
-#import nltk
-from nltk.tokenize import word_tokenize
-import create_graph 
-from recipe_search import RecipeSearch,Recipe_output
+import create_graph
+class RecipeSearch:
+    def __init__(self, recipe_graph):
+        self.recipe_graph = recipe_graph
 
-# Initialize NLTK
-#nltk.download('punkt')
-
-# Create RecipeGraph instance
-recipe_graph = create_graph.create_recipe_graph()
-# Add recipes to the graph (you can add your own recipes here)
-
-# Create RecipeSearch instance
-recipe_search = RecipeSearch(recipe_graph)
-
-def process_input(input_text):
-    # Tokenize input text
-    tokens = word_tokenize(input_text)
-    # Extract ingredients from the input text
-    ingredients = set()
-    for word in tokens:
-        if word.isalpha():  # Check if the word contains only alphabetic characters
-            ingredients.add(word.title())  # Add the ingredient to the set of ingredients
-    return ingredients
-
-def suggest_recipe(ingredients):
-    # Find recipes based on the provided ingredients
-    
-    recipes = Recipe_output.output(ingredients)
-    print("recipes are ")
-    return recipes
+    def find_recipes(self, available_ingredients):
+        possible_recipes = set()
+        for ingredient_name in available_ingredients:
+            if ingredient_name in self.recipe_graph.ingredients:
+                ingredient_node = self.recipe_graph.ingredients[ingredient_name]
+                for recipe_node in ingredient_node.recipes:
+                    recipe_ingredients = {ingredient.name for ingredient in recipe_node.ingredients}
+                    if recipe_ingredients.issubset(available_ingredients):
+                        possible_recipes.add(recipe_node.name)
+        return possible_recipes
 
 def main():
-    print("Welcome to the Recipe Bot!")
-    while True:
-        user_input = input("Please enter the ingredients you have (separated by spaces), or 'exit' to quit: ")
-        if user_input.lower() == 'exit':
-            print("Thank you for using Recipe Bot. Goodbye!")
-            break
-        else:
-            user_ingredients = process_input(user_input)
-            if user_ingredients:
-                print("Searching for recipes with ingredients:", user_ingredients)
-                suggested_recipes = suggest_recipe(user_ingredients)
-                if suggested_recipes:
-                    print("Here are some suggested recipes:")
-                    for recipe in suggested_recipes:
-                        print(recipe)
-                else:
-                    print("No recipes found with the provided ingredients.")
-            else:
-                print("No valid ingredients provided. Please try again.")
+    
+    recipe_graph = create_graph.create_recipe_graph()
+    recipe_search = RecipeSearch(recipe_graph)
+
+    available_ingredients = {"Basmati Rice", "Chicken", "Spices","Pizza Dough", "Tomato Sauce", "Cheese"}
+    recipes = recipe_search.find_recipes(available_ingredients)
+
+    if recipes:
+        print("Ingredients available:")
+        print(available_ingredients)
+        print("Recipes that can be made with the available ingredients:")
+        for recipe in recipes:
+            print(recipe)
+    else:
+        print("No recipes can be made with the available ingredients.")
 
 if __name__ == "__main__":
     main()

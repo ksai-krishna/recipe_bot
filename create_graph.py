@@ -30,7 +30,7 @@ class RecipeGraph:
 
 def create_recipe_graph():
     recipe_graph = RecipeGraph()    
-    recipe_graph.add_recipe("Pasta without sauce", ["Pasta", "Tomatosauce"], dish_type="lunch food")
+    recipe_graph.add_recipe("Pasta without sauce", ["Pasta", "Tomato Sauce"], dish_type="lunch food")
     recipe_graph.add_recipe("Raw Pasta", ["Pasta"], dish_type="lunch food")
     recipe_graph.add_recipe("Pasta", ["Pasta", "Tomato Sauce", "Cheese"], dish_type="lunch food")
     recipe_graph.add_recipe("Butter Chicken", ["Chicken", "Butter", "Tomato", "Cream", "Spices"], dish_type="dinner food")

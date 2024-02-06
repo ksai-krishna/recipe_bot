@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from nltk.tokenize import word_tokenize
-import create_graph 
-from recipe_search import RecipeSearch
+from recipe_search import RecipeSearch, Recipe_output
+import create_graph
 
 app = Flask(__name__)
 
@@ -43,15 +43,13 @@ def suggest_recipe(ingredients, dish_type=None):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    recipes = None
     if request.method == 'POST':
         input_text = request.form['input_text']
         ingredients, dish_type = process_input(input_text)
         if ingredients:
-            suggested_recipes = suggest_recipe(ingredients, dish_type)
-            return render_template('result.html', ingredients=ingredients, dish_type=dish_type, recipes=suggested_recipes)
-        else:
-            return render_template('index.html', error="No valid ingredients provided. Please try again.")
-    return render_template('index.html')
+            recipes = suggest_recipe(ingredients, dish_type)
+    return render_template('index.html', recipes=recipes)
 
 if __name__ == '__main__':
     app.run(debug=True)

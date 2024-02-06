@@ -4,13 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe Finder Bot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .chat-container {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            max-width: 70%;
+        }
+        .user-message {
+            background-color: #F0F0F0;
+            float: left;
+        }
+        .bot-message {
+            background-color: #DCF8C6;
+            float: right;
+        }
+        .result-message {
+            background-color: #DCF8C6;
+            color: #000;
+        }
+        .clear {
+            clear: both;
+        }
+    </style>
 </head>
 <body>
     <h1>Recipe Finder Bot</h1>
-    <form action="/" method="post">
-        <label for="input_text">Enter your ingredients and dish type:</label><br>
-        <textarea id="input_text" name="input_text" rows="4" cols="50"></textarea><br>
-        <input type="submit" value="Submit">
-    </form>
+    <div class="chat-container">
+        <div class="message bot-message">Recipe Bot: Please enter the ingredients you want to search a good recipe for.</div>
+        <form action="/" method="post">
+            <div class="message user-message">User: <textarea id="input_text" name="input_text" rows="4" cols="40"></textarea></div>
+            <div class="clear"></div>
+            <input type="submit" value="Submit">
+        </form>
+        <br>
+        {% if recipes %}
+        
+            <div class="message result-message">Recipe Bot: These are some good recipes I found:
+                <ul>
+                    {% for recipe in recipes %}
+                        <li>{{ recipe }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
 </body>
 </html>

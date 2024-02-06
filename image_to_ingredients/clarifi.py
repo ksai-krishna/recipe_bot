@@ -5,7 +5,7 @@ from clarifai_client import ClarifaiApp
 app_id = "YOUR_APP_ID"
 access_token = "YOUR_ACCESS_TOKEN"
 
-# Initialize Clarifai app
+# Initialize Clarifai ap
 app = ClarifaiApp(app_id, access_token)
 
 # Flask app

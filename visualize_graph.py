@@ -42,8 +42,6 @@ def create_recipe_graph():
     return recipe_graph 
 
 
-
-
 class RecipeGraphVisualizer:
     def __init__(self, recipe_graph):
         self.recipe_graph = recipe_graph

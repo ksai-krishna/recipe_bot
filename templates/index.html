@@ -51,6 +51,13 @@
             border-radius: 5px;
             margin-bottom: 10px;
         }
+        #image_input {
+            width: calc(100% - 90px); /* Adjusted width */
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
         #submit_button {
             padding: 10px;
             background-color: #1abc9c;
@@ -64,7 +71,7 @@
 <body>
     <div class="chat-container">
         <div class="message-container">
-            <div class="bot-bubble">Recipe Bot: Give me some ingredients, and I'll suggest a good recipe.</div>
+            <div class="bot-bubble">Recipe Bot: Give me some ingredients or upload an image, and I'll suggest a good recipe.</div>
         </div>
         {% if result %}
             <div class="message-container">
@@ -75,9 +82,12 @@
                 <div class="bot-bubble">{{ result }}</div>
             </div>
         {% endif %}
-        <form action="/" method="post">
+        <form action="/" method="post" enctype="multipart/form-data">
             <div class="message-container">
                 <div class="user-bubble">User: <textarea id="input_text" name="input_text" rows="2" cols="25"></textarea></div>
+            </div>
+            <div class="message-container">
+                <div class="user-bubble">Image: <input type="file" id="image_input" name="image_input"></div>
             </div>
             <div class="clear"></div>
             <input id="submit_button" type="submit" value="Submit">

@@ -14,8 +14,8 @@ recipe_search = RecipeSearch(recipe_graph)
 def process_input(input_text):
     # Tokenize input text
     tokens = word_tokenize(input_text)
-    # Extract ingredients and dish type from the input text
     ingredients = set()
+    # Extract ingredients and dish type from the input text
     dish_type = None
     dishtypes = ['dinner food', 'snack', 'breakfast', 'sweet', 'beverage', 'lunch food', 'healthy']
     ingredient_buffer = ""
@@ -42,6 +42,7 @@ def image_to_ingredients(image_file):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     result = None
+    ingredients = set()  # Initialize ingredients to avoid UnboundLocalError
     if request.method == 'POST':
         if 'image_input' in request.files:
             # If an image file is uploaded
@@ -57,7 +58,7 @@ def index():
             ingredients, dish_type = process_input(input_text)
             if ingredients:
                 result = suggest_recipe(ingredients, dish_type)
-    return render_template('index.html', result=result,ingredients=ingredients)
+    return render_template('index.html', result=result, ingredients=ingredients)
 
 def suggest_recipe(ingredients, dish_type=None):
     # Find recipes based on the provided ingredients and dish type
